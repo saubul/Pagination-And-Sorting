@@ -27,4 +27,18 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return empRepo.save(employee);
 	}
 	
+	@Override
+	public Employee findEmployeeById(Long id) {
+		Employee emp = empRepo.findById(id).orElse(null);
+		
+		if(emp == null) {
+			throw new RuntimeException("Employee not found for id: " + id);
+		}
+		return emp;
+	}
+	
+	@Override
+	public void deleteEmployeeById(Long id) {
+		empRepo.deleteById(id);
+	}
 }

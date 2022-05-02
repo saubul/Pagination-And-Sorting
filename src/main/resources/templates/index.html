@@ -28,6 +28,10 @@
 								<td th:text = "${emp.getFirstName()}"></td>
 								<td th:text = "${emp.getLastName()}"></td>
 								<td th:text = "${emp.getEmail()}"></td>
+								<td>
+									<a class = "btn btn-primary" th:href="@{/employees/{id}/update (id = ${emp.getId()})}">Update</a>
+									<a class = "btn btn-danger" th:href="@{/employees/{id}/delete (id = ${emp.getId()})}">Delete</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

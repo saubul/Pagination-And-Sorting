@@ -8,6 +8,4 @@ import ru.saubulprojects.pagsortapp.model.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>{
 	
-	
-	
 }

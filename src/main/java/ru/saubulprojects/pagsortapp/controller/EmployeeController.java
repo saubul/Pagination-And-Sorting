@@ -1,5 +1,8 @@
 package ru.saubulprojects.pagsortapp.controller;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +27,7 @@ public class EmployeeController {
 	@GetMapping
 	public String indexForm(Model model) {
 		
-		model.addAttribute("employees", empService.getAllEmployees());
-		return "index";
-		
+		return findPaginated(1, model);
 	}
 	
 	@GetMapping("/new")
@@ -67,10 +68,16 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable("pageNo") int pageNo) {
+	public String findPaginated(@PathVariable("pageNo") int pageNo, Model model) {
 		int pageSize = 5;
-		return null;
 		
+		Page<Employee> page = empService.findPaginated(pageNo, pageSize);
+		List<Employee> listEmployees = page.getContent();
+		model.addAttribute("currentPage", pageNo);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("listEmployees", listEmployees);
+		
+		return "index";
 	}
 }
 

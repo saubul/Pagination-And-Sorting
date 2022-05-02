@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	
 	@Override
 	public Page<Employee> findPaginated(int pageNo, int pageSize) {
-		Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+		Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
 		return empRepo.findAll(pageable);
 	}
 }

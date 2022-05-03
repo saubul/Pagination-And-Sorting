@@ -17,8 +17,16 @@
 					<table class = "table">
 						<thead>
 							<tr>
-								<th>Employee first name</th>
-								<th>Employee last name</th>
+								<th>
+									<a th:href="@{'/employees/page/' + ${currentPage} + '?sortField=firstName&sortDirection=' + ${reverseSortDirection}}">
+										Employee First Name
+									</a>
+								</th>
+								<th>									
+									<a th:href="@{'/employees/page/' + ${currentPage} + '?sortField=lastName&sortDirection=' + ${reverseSortDirection}}">
+										Employe Last name
+									</a>
+								</th>
 								<th>Employee email</th>
 								<th>Action</th>
 							</tr>
@@ -38,20 +46,22 @@
 					
 					<div th:if="${totalPages > 1}">
 						<div class = "row col-sm-10">
-
-							<div class = "col-sm-1">
-								<a  th:if="${currentPage} > 1" th:href="@{'/employees/page/' + ${currentPage - 1}}" th:text="'<'"></a>
-								<span th:if = "${currentPage == 1}" th:text="'<'"></span>
-							</div>
-							<div class = "col-sm-1">
-								<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-									<a th:if="${currentPage != i}" th:href="@{'/employees/page/' + ${i}}">[[${i}]]</a>
-									<span th:if="${currentPage == i}">[[${i}]]</span>
-								</span>
-							</div>
-							<div class = "col-sm-1">
-								<a  th:if="${currentPage < totalPages}" th:href="@{'/employees/page/' + ${currentPage + 1}}">></a>
-								<span th:if = "${currentPage == totalPages}">></span>
+							<div class = " d-inline-flex">
+								<div class = "col-sm-1">
+									<a  th:if="${currentPage} > 1" th:href="@{'/employees/page/' + ${currentPage - 1} +'?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}" 
+										th:text="'<'"></a>
+									<span th:if = "${currentPage == 1}" th:text="'<'"></span>
+								</div>
+								<div class = "col-sm-1">
+									<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+										<a th:if="${currentPage != i}" th:href="@{'/employees/page/' + ${i} +'?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">[[${i}]]</a>
+										<span th:if="${currentPage == i}">[[${i}]]</span>
+									</span> 
+								</div>
+								<div class = "col-sm-1">
+									<a  th:if="${currentPage < totalPages}" th:href="@{'/employees/page/' + ${currentPage + 1} +'?sortField=' + ${sortField} + '&sortDirection=' + ${sortDirection}}">></a>
+									<span th:if = "${currentPage == totalPages}">></span>
+								</div>
 							</div>
 						</div>
 					</div>

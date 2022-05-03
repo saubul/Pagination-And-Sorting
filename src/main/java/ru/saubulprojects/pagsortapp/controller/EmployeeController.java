@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ru.saubulprojects.pagsortapp.model.Employee;
 import ru.saubulprojects.pagsortapp.service.EmployeeService;
@@ -27,7 +28,8 @@ public class EmployeeController {
 	
 	@GetMapping
 	public String indexForm(Model model) {
-		return findPaginated(pageNo, model);
+		return findPaginated(pageNo, model, "firstName", "asc");
+		
 	}
 	
 	@GetMapping("/new")
@@ -68,15 +70,21 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable("pageNo") int pageNo, Model model) {
+	public String findPaginated(@PathVariable("pageNo") int pageNo, Model model,
+								@RequestParam("sortField") String sortField,
+								@RequestParam("sortDirection") String sortDirection) {
 		int pageSize = 5;
 		
-		Page<Employee> page = empService.findPaginated(pageNo, pageSize);
+		Page<Employee> page = empService.findPaginated(pageNo - 1, pageSize, sortField, sortDirection);
 		List<Employee> listEmployees = page.getContent();
 		model.addAttribute("currentPage", pageNo);
 		this.pageNo = (int) model.getAttribute("currentPage");
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("listEmployees", listEmployees);
+		
+		model.addAttribute("sortField", sortField);
+		model.addAttribute("sortDirection", sortDirection);
+		model.addAttribute("reverseSortDirection", sortDirection.equals("asc")?"desc":"asc");
 		
 		return "index";
 	}

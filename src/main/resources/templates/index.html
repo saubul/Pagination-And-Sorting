@@ -39,12 +39,9 @@
 					<div th:if="${totalPages > 1}">
 						<div class = "row col-sm-10">
 
-							<div class = "col-sm-2">
-								Total rows: [[${totalPages}]]
-							</div>
 							<div class = "col-sm-1">
-								<a  th:if="${currentPage} > 1" th:href="@{'/employees/page/' + ${currentPage - 1}}">Back</a>
-								<span th:if = "${currentPage == 1}">Back</span>
+								<a  th:if="${currentPage} > 1" th:href="@{'/employees/page/' + ${currentPage - 1}}" th:text="'<'"></a>
+								<span th:if = "${currentPage == 1}" th:text="'<'"></span>
 							</div>
 							<div class = "col-sm-1">
 								<span th:each="i: ${#numbers.sequence(1, totalPages)}">
@@ -53,8 +50,8 @@
 								</span>
 							</div>
 							<div class = "col-sm-1">
-								<a  th:if="${currentPage < totalPages}" th:href="@{'/employees/page/' + ${currentPage + 1}}">Next</a>
-								<span th:if = "${currentPage == totalPages}">Next</span>
+								<a  th:if="${currentPage < totalPages}" th:href="@{'/employees/page/' + ${currentPage + 1}}">></a>
+								<span th:if = "${currentPage == totalPages}">></span>
 							</div>
 						</div>
 					</div>

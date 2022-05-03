@@ -19,6 +19,7 @@ import ru.saubulprojects.pagsortapp.service.EmployeeService;
 public class EmployeeController {
 
 	private final EmployeeService empService;
+	private int pageNo = 1;
 	
 	public EmployeeController(EmployeeService empService) {
 		this.empService = empService;
@@ -26,8 +27,7 @@ public class EmployeeController {
 	
 	@GetMapping
 	public String indexForm(Model model) {
-		
-		return findPaginated(1, model);
+		return findPaginated(pageNo, model);
 	}
 	
 	@GetMapping("/new")
@@ -74,6 +74,7 @@ public class EmployeeController {
 		Page<Employee> page = empService.findPaginated(pageNo, pageSize);
 		List<Employee> listEmployees = page.getContent();
 		model.addAttribute("currentPage", pageNo);
+		this.pageNo = (int) model.getAttribute("currentPage");
 		model.addAttribute("totalPages", page.getTotalPages());
 		model.addAttribute("listEmployees", listEmployees);
 		
